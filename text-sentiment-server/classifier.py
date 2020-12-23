@@ -1,11 +1,10 @@
 # run this cell to import nltk
 import nltk
 import sys
-from os import getcwd, path
+import os
 import logging
 import pickle
 import numpy as np
-import pandas as pd
 from nltk.corpus import twitter_samples 
 from utils import process_tweet, build_freqs, extract_features, sigmoid, gradientDescent
 
@@ -13,8 +12,9 @@ from utils import process_tweet, build_freqs, extract_features, sigmoid, gradien
 Init and configuration
 '''
 logger = logging.getLogger('text-assessment-server')
-THETA_FILE = 'model/theta.bin'
-FREQS_FILE = 'model/freqs.bin'
+MODEL_FOLDER = 'model'
+THETA_FILE = MODEL_FOLDER + '/theta.bin'
+FREQS_FILE = MODEL_FOLDER + '/freqs.bin'
 
 # Provides working data set
 def get_dataset():
@@ -90,11 +90,11 @@ def load_model():
     freqs = None
     theta = None
 
-    if(path.exists(FREQS_FILE)):
+    if(os.path.exists(FREQS_FILE)):
         with open(FREQS_FILE, 'rb') as fp:
             freqs = pickle.load(fp)
     
-    if(path.exists(THETA_FILE)):
+    if(os.path.exists(THETA_FILE)):
         with open(THETA_FILE, 'rb') as fp:
             theta = pickle.load(fp)
 
@@ -102,6 +102,8 @@ def load_model():
 
 # Saves model in binary files
 def save_model(freqs, theta):
+    if not os.path.exists(MODEL_FOLDER):
+        os.makedirs(MODEL_FOLDER)
     with open(FREQS_FILE, 'wb') as fp:
         pickle.dump(freqs, fp, protocol=pickle.HIGHEST_PROTOCOL)
     with open(THETA_FILE, 'wb') as fp:

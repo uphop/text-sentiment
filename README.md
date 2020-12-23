@@ -1,4 +1,62 @@
 # Real-time text sentiment analysis with custom classifier
 
 ## Overview
+
 This is a web app demonstraing a real-time sentence-based text sentiment analysis, implemented with a custom-built [logistic regression classifier](https://en.wikipedia.org/wiki/Logistic_regression). The classifier is trained on NLTK sample Twitter data set (see [Twitter Samples](http://www.nltk.org/nltk_data/)).
+
+The project consists of the following modules:
+* `text-sentiment-app`: a React application, which captures text input from a user, splits captured text into sentences, sends each sentence which was not classified yet via a websocket to `text-sentiment-server` for classification, and then visualises classified sentences with a sentiment-based color scale.
+* `text-sentiment-server`: a Python-based server, which gets sentences from `text-sentiment-app` via a websocket, and sets a sentence sentiment based on a pre-trained logistic regression classifier. Also, this component checks on starting-up if a pre-trained model is available - and if not, runs a model pre-training, tests trained model and saves that in binaries.
+
+The following are key 3rd party components used:
+* [sentence-splitter](https://www.npmjs.com/package/sentence-splitter) - used in `text-sentiment-app` for splitting captured text into sentences
+* [NLTK](https://recordrtc.org/) - used in `text-sentiment-server` to pre-process sentences
+* [numpy](https://numpy.org/) - used in `text-sentiment-server` for matrix math
+
+## Model configuration
+
+Sentence classification is implemented with a logistic regression classifier. Classifier is pre-trained based on Twitter samples (10k samples in total, 5k positives and 5k negatives), on a word level. Split factor (training / test data) is 0.8.
+Training accuracy can be tuned by changing training iteration count (now set to 1500). Trained model (freatures and weights) are stored in bianry files aside `text-sentiment-server` runtime (subfolder `model`).
+
+## Setting-up
+
+Clone full project:
+```
+git clone git@github.com:uphop/text-sentiment.git && cd text-sentiment
+```
+
+Install dependencies and prepare configuration for `text-sentiment-app`:
+```
+cd text-sentiment-app && yarn install && cp .env.sample .env && cd..
+```
+
+Install dependencies and prepare configuration for `text-sentiment-server`:
+```
+cd text-sentiment-server && pip3 install -r requrements.txt && cp .example-env .env && cd..
+```
+
+## Starting-up
+
+Start `sentiment-assessment-server`:
+```
+cd text-sentiment-server && ./run.sh
+```
+
+Start `text-sentiment-app`:
+```
+cd voice-sentiment-app &&  yarn start
+```
+
+## Usage
+
+Type some text into the text area - the app will be capturing text, attempting to split into sentences / assess sentiment scores, and visualise those as text background color.
+
+Here is an example of what you should see as the result:
+![Screenshot](https://user-images.githubusercontent.com/74451637/102792387-1c6b5280-43b1-11eb-8dab-590c59007117.png)
+
+And here is a recorded example of sentiment score assessment while typing:
+
+[![Recorded_sample](http://img.youtube.com/vi/4XegsEG1NUU/0.jpg)](http://www.youtube.com/watch?v=4XegsEG1NUU "Text Sentiment example")
+
+
+
