@@ -1,4 +1,4 @@
-# Real-time text sentiment analysis with custom classifier
+# Real-time text sentiment analysis with a custom logistic regression classifier
 
 ## Overview
 
@@ -73,11 +73,10 @@ cd voice-sentiment-app &&  yarn start
 Type some text into the text area - the app will be capturing text, attempting to split into sentences / assess sentiment scores, and visualise those as text background color.
 
 Here is an example of what you should see as the result:
-![Screenshot](https://user-images.githubusercontent.com/74451637/102792387-1c6b5280-43b1-11eb-8dab-590c59007117.png)
+![Screenshot](https://user-images.githubusercontent.com/74451637/103000607-089c2980-4534-11eb-9104-a8bb372ec2ff.png)
 
 And here is a recorded example of sentiment score assessment while typing:
-
-[![Recorded_sample](http://img.youtube.com/vi/4XegsEG1NUU/0.jpg)](http://www.youtube.com/watch?v=4XegsEG1NUU "Text Sentiment example")
+[![Recorded_sample](http://img.youtube.com/vi/MRnLPVJv3Sw/0.jpg)](http://www.youtube.com/watch?v=MRnLPVJv3Sw "Text Sentiment example")
 
 
 
