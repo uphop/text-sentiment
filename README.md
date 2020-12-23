@@ -76,7 +76,7 @@ Here is an example of what you should see as the result:
 ![Screenshot](https://user-images.githubusercontent.com/74451637/103000607-089c2980-4534-11eb-9104-a8bb372ec2ff.png)
 
 And here is a recorded example of sentiment score assessment while typing:
-[![Recorded_sample](http://img.youtube.com/vi/MRnLPVJv3Sw/0.jpg)](http://www.youtube.com/watch?v=MRnLPVJv3Sw "Text Sentiment example")
+[![Recorded_sample](http://img.youtube.com/vi/0WAfJ4Dj-8U/0.jpg)](http://www.youtube.com/watch?v=0WAfJ4Dj-8U "Text Sentiment example")
 
 
 
