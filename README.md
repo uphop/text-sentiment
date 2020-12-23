@@ -6,7 +6,7 @@ This is a web app demonstraing a real-time sentence-based text sentiment analysi
 
 The project consists of the following modules:
 * `text-sentiment-app`: a React application, which captures text input from a user, splits captured text into sentences, sends each sentence which was not classified yet via a websocket to `text-sentiment-server` for classification, and then visualises classified sentences with a sentiment-based color scale.
-* `text-sentiment-server`: a Python-based server, which gets sentences from `text-sentiment-app` via a websocket, and sets a sentence sentiment based on a pre-trained logistic regression classifier. Also, this component checks on starting-up if a pre-trained model is available - and if not, runs a model pre-training, tests trained model and saves that in binaries.
+* `text-sentiment-server`: a Python-based server, which gets sentences from `text-sentiment-app` via a websocket, and sets a sentence sentiment based on a pre-trained logistic regression classifier. 
 
 The following are key 3rd party components used:
 * [sentence-splitter](https://www.npmjs.com/package/sentence-splitter) - used in `text-sentiment-app` for splitting captured text into sentences
@@ -16,7 +16,28 @@ The following are key 3rd party components used:
 ## Model configuration
 
 Sentence classification is implemented with a logistic regression classifier. Classifier is pre-trained based on Twitter samples (10k samples in total, 5k positives and 5k negatives), on a word level. Split factor (training / test data) is 0.8.
-Training accuracy can be tuned by changing training iteration count (now set to 1500). Trained model (freatures and weights) are stored in bianry files aside `text-sentiment-server` runtime (subfolder `model`).
+
+`text-sentiment-server` checks on starting-up if a pre-trained model is available - and if not, runs a model pre-training, tests trained model and saves that in binaries - you should see an output similar to this:
+```
+2020-12-23 15:16:24,333 [MainThread  ] [INFO ]  No pre-trained model available, training now...
+2020-12-23 15:16:24,333 [MainThread  ] [INFO ]  Retrieving dataset.
+[nltk_data] Downloading package twitter_samples to
+[nltk_data]     /Users/olegas.murasko/nltk_data...
+[nltk_data]   Package twitter_samples is already up-to-date!
+[nltk_data] Downloading package stopwords to
+[nltk_data]     /Users/olegas.murasko/nltk_data...
+[nltk_data]   Package stopwords is already up-to-date!
+2020-12-23 15:16:25,338 [MainThread  ] [INFO ]  Splitting dataset, split factor: 0.8
+2020-12-23 15:16:28,464 [MainThread  ] [INFO ]  Completed frequency matrix, total length: 11340
+2020-12-23 15:16:31,977 [MainThread  ] [INFO ]  The cost after training is 0.24216477.
+2020-12-23 15:16:31,978 [MainThread  ] [INFO ]  The resulting vector of weights is [7e-08, 0.0005239, -0.00055517]
+2020-12-23 15:16:32,861 [MainThread  ] [INFO ]  Accuracy on test dataset: 0.995
+2020-12-23 15:16:32,868 [MainThread  ] [INFO ]  Loaded model.
+2020-12-23 15:16:32,868 [MainThread  ] [INFO ]  Starting server on host 0.0.0.0, port 2702
+```
+
+Training accuracy can be tuned by changing training iteration count (now set to 1500). 
+Trained model (freatures and weights) are stored in binary files aside `text-sentiment-server` runtime (subfolder `model`).
 
 ## Setting-up
 
